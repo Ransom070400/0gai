@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #06060d;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.35);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2d2d48;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3d3d5c;
+  }
+}
+
+@layer components {
+  /* ---- Glass surfaces ---- */
+  .glass {
+    background: rgba(12, 12, 24, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .glass-card {
+    background: rgba(20, 20, 37, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+  }
+
+  .glass-chat {
+    background: rgba(14, 14, 26, 0.7);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(124, 58, 237, 0.08);
+    border-radius: 20px;
+  }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5 rounded-xl font-medium text-sm
+           bg-og-600 text-white
+           hover:bg-og-500 active:bg-og-700
+           shadow-lg shadow-og-600/20 hover:shadow-og-500/30
+           transition-all duration-200 ease-out
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-og-600 disabled:shadow-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2 rounded-xl font-medium text-sm
+           text-void-200 border border-void-600
+           hover:border-og-500/30 hover:text-og-300 hover:bg-og-500/5
+           transition-all duration-200
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-icon {
+    @apply inline-flex items-center justify-center
+           w-9 h-9 rounded-xl
+           text-void-400 hover:text-og-400 hover:bg-og-500/10
+           transition-all duration-200;
+  }
+
+  /* ---- Inputs ---- */
+  .input-chat {
+    @apply w-full bg-transparent text-white placeholder:text-void-500
+           focus:outline-none text-sm leading-relaxed resize-none;
+  }
+
+  /* ---- Badges ---- */
+  .badge-connected {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium
+           bg-og-500/10 text-og-300 border border-og-500/15;
+  }
+
+  /* ---- Background Mesh ---- */
+  .mesh-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 70%, rgba(91, 33, 182, 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(30, 10, 62, 0.08) 0%, transparent 50%);
+  }
+
+  /* ---- Noise texture overlay ---- */
+  .noise::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ---- Chat message bubbles ---- */
+  .msg-user {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(91, 33, 182, 0.08) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 16px 16px 4px 16px;
+  }
+
+  .msg-ai {
+    background: rgba(20, 20, 37, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px 16px 16px 4px;
+  }
+
+  /* ---- Typing indicator ---- */
+  .typing-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-og-400;
+    animation: typing 1.4s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+  /* ---- Shimmer loading effect ---- */
+  .shimmer-line {
+    background: linear-gradient(
+      90deg,
+      rgba(124, 58, 237, 0.04) 25%,
+      rgba(124, 58, 237, 0.1) 50%,
+      rgba(124, 58, 237, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 8px;
+  }
+
+  /* ---- Markdown prose inside AI messages ---- */
+  .ai-prose p { margin-bottom: 0.75em; line-height: 1.7; }
+  .ai-prose p:last-child { margin-bottom: 0; }
+  .ai-prose strong { color: #d5cbff; font-weight: 600; }
+  .ai-prose ul, .ai-prose ol { margin: 0.5em 0; padding-left: 1.25em; }
+  .ai-prose li { margin-bottom: 0.25em; }
+  .ai-prose code {
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 5px;
+    padding: 0.15em 0.4em;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85em;
+    color: #b5a2ff;
+  }
+  .ai-prose pre {
+    background: rgba(12, 12, 24, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 1em;
+    overflow-x: auto;
+    margin: 0.75em 0;
+  }
+  .ai-prose pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.8em;
+    color: #a8a8bd;
+  }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: #e9e3ff;
+    margin: 1em 0 0.4em;
+  }
+  .ai-prose h1 { font-size: 1.1em; }
+  .ai-prose h2 { font-size: 1.05em; }
+  .ai-prose h3 { font-size: 1em; }
+}
+
+/* ---- Fade-in utility ---- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stagger-1 { animation: fadeUp 0.4s ease-out 0.05s both; }
+.stagger-2 { animation: fadeUp 0.4s ease-out 0.1s both; }
+.stagger-3 { animation: fadeUp 0.4s ease-out 0.15s both; }
+.stagger-4 { animation: fadeUp 0.4s ease-out 0.2s both; }
