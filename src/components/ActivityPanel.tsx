@@ -25,9 +25,12 @@ export default function ActivityPanel({ activity, isLoading, error, onRefresh }:
   return (
     <div className="glass-card overflow-hidden">
       {/* Header */}
-      <button
+      <div
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-5 py-4 hover:bg-void-800/20 transition-colors"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setExpanded(!expanded); }}
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-void-800/20 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-2.5">
           <Activity size={16} className="text-og-400" />
@@ -44,7 +47,7 @@ export default function ActivityPanel({ activity, isLoading, error, onRefresh }:
           </button>
           {expanded ? <ChevronUp size={14} className="text-void-500" /> : <ChevronDown size={14} className="text-void-500" />}
         </div>
-      </button>
+      </div>
 
       {expanded && (
         <div className="px-5 pb-5 space-y-4">
